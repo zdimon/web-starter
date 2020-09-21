@@ -1,0 +1,53 @@
+[
+
+    {
+        "question": "Как вас зовут?",
+        "type": "text",
+        "name": "question1"
+    },
+
+    {
+        "question": "Как вас зовут?",
+        "type": "text",
+        "name": "question1"
+    },
+
+    {
+        "question": "Как вас зовут?",
+        "type": "text",
+        "name": "question1"
+    },
+
+    {
+        "question": "Кто победил в ВОВ?",
+        "type": "radio",
+        "name": "question2",
+        "answers": [
+                      {"text": "CCCР", "is_valid": true },
+                      {"text": "США", "is_valid": false }
+                   ]
+    },
+    {
+        "question": "Есть ли бог на свете?",
+        "type": "select",
+        "name": "question3",
+        "answers": [
+                      {"text": "Да", "is_valid": true },
+                      {"text": "Нет", "is_valid": false },
+                      {"text": "Наука не в курсе дела", "is_valid": false }
+                   ]
+    },
+
+    {
+        "question": "Любимое животное",
+        "type": "checkbox",
+        "name": "question4",
+        "answers": [
+                      {"text": "Кот" },
+                      {"text": "Собака барабака"},
+                      {"text": "Конь"}
+                   ]
+    }
+
+
+]
