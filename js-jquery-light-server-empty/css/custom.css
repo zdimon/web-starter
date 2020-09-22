@@ -1,5 +1,9 @@
 #content {
     padding: 5px;
+    border: 1px solid silver;
+    position: absolute;
+    background-color: silver;
+
 }
 
 #log-block {
@@ -8,3 +12,16 @@
     padding: 5px;
     border-radius: 5px;
 }
+
+#videoElement {
+    border: 1px solid red;
+    width: 100px;
+    height: 100px;
+}
+
+body {
+    position: relative;
+}
+
+
+
