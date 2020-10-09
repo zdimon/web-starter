@@ -1,0 +1,76 @@
+
+<!DOCTYPE html>
+<html>
+    <head><title>TypeScript Greeter</title>
+        <script src="node_modules/jquery/dist/jquery.min.js"></script>
+        <script src="node_modules/socket.io-client/dist/socket.io.js"></script>
+        <script src="node_modules/rx/dist/rx.all.js"></script>
+    </head>
+    <body>
+        <h1>Test socketio</h1>
+
+       
+
+        <button id="button">Refresh</button>
+
+        <canvas id="canvas" width="300" height="300" style="border: 1px solid red;"></canvas>
+
+        <script>
+           const socket = io('ws://localhost:5000', {transports:['websocket']});  
+           socket.on('connect', () => {
+                //console.log(socket);
+                socket.on('message', msg => {
+                    console.log(msg);
+                    draw(msg);
+                    //$('#messages').append($(`<div>${msg.data}</div>`));
+                })
+           });
+
+           $('#button').on('click',() => {
+               socket.emit('message',{data: 'refresh'});
+           });
+
+           var canvas = $("#canvas")[0];
+           var ctx = canvas.getContext("2d");
+           tank_image = new Image();
+           tank_image.src = 'static/tank.png';
+
+           var keydown = Rx.Observable.fromEvent(document, 'keydown');
+           keydown.subscribe((evt) => {
+               if(evt.key === 'ArrowLeft') {
+                    console.log('left');
+                    socket.emit('message',{data: 'move_left'});
+               }
+
+               if(evt.key === 'ArrowRight') {
+                console.log('right');
+                socket.emit('message',{data: 'move_right'});
+               }               
+               
+           })
+           
+           //console.log(canvas);
+           function draw(data){
+                ctx.fillStyle = '#000000';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                ctx.fillStyle = '#ffffff';
+                data.blocks.forEach(function(block) {
+                    ctx.fillRect(block.x, block.y, block.size, block.size);
+                });
+
+                data.tanks.forEach(function(tank) {
+                    ctx.drawImage(tank_image, tank.x, tank.y);
+                });
+
+            
+                
+                
+           }
+        </script>
+    </body>
+</html>
+
+
+
+
+
