@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+    <head><title>Test page</title>
+        <script src="node_modules/systemjs/dist/system.js"></script>
+    </head>
+    <body>
+        <h1>Testccccc</h1>
+        <script>
+            SystemJS.config({
+                defaultJSExtensions: true,
+                map: {
+                    'socket.io': 'node_modules/socket.io-client/dist'
+                },
+                packages: {
+                    'socket.io': {
+                        main: './socket.io.js'
+                    }
+                }
+            });
+            SystemJS.import('dist/client/index.js');        
+        </script>
+        <!-- <script src="/node_modules/reload/lib/reload.js"></script> -->
+    </body>
+</html>

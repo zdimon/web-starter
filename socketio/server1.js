@@ -4,7 +4,7 @@ const server = require('http').createServer(app);
 const io = require('socket.io')(server, {});
 const myapp = require('./app/main');
 myapp.init(io);
-console.log(myapp);
+// console.log(myapp);
 app.use(express.static('.'));
 
 app.get('/test', (req, res) => {

@@ -9,26 +9,51 @@ app.init = function(io) {
     this.createMap();
     this.ping();
     io.on('connection', socket => { 
-        console.log('Connected');
+        console.log(`Connected ${socket.id}`);
+        
         this.createTank(socket.id);
+        console.log(this.tanks);
         socket.on('message', data => {
             if(data.data === 'refresh') {
                 this.createMap();
                 console.log('refreshing');
             }
             if(data.data === 'move_left') {
-                let tank = this.findTank(socket.id);
-                tank.x = tank.x - 3;
+                try { 
+                    let tank = this.findTank(socket.id);
+                    tank.x = tank.x - 3;
+                } catch {
+                    console.log(this.tanks);
+                    console.log(socket.id);
+                }
             }
             if(data.data === 'move_right') {
-                let tank = this.findTank(socket.id);
-                tank.x = tank.x + 3;
+                try { 
+                    let tank = this.findTank(socket.id);
+                    tank.x = tank.x + 3;
+                } catch {
+                    console.log(this.tanks);
+                    console.log(socket.id);
+                }
             }
+
+            if(data.data === 'move_forward') {
+
+                    let tank = this.findTank(socket.id);
+                    tank.y = tank.y - 3;
+
+            }
+            if(data.data === 'move_back') {
+                    let tank = this.findTank(socket.id);
+                    tank.y = tank.y + 3;
+            }
+
         });
 
         socket.on('disconnect', () => { 
-            console.log('disconnection');
+            console.log(`disconnection ${socket.id}`);
             this.deleteTank(socket.id);
+            console.log(this.tanks);
         })
 
         
@@ -50,7 +75,7 @@ app.createTank = function(sid){
 app.deleteTank = function(sid){
     for(let t in this.tanks){
         if(this.tanks[t].sid === sid){
-            this.tanks = this.tanks.splice(t,1);
+            this.tanks = this.tanks.splice(t-1,1);
         }
     }
 }

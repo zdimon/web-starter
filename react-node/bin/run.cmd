@@ -1,0 +1,1 @@
+node_modules/nodemon/bin/nodemon.js dist/server/index.js --ignore dist 

@@ -1,0 +1,5 @@
+{
+    "verbose": false,
+    "ignore": ["dist/*"],
+    "watch": ["src/*"]
+  }

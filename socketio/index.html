@@ -37,6 +37,7 @@
 
            var keydown = Rx.Observable.fromEvent(document, 'keydown');
            keydown.subscribe((evt) => {
+            console.log(evt);
                if(evt.key === 'ArrowLeft') {
                     console.log('left');
                     socket.emit('message',{data: 'move_left'});
@@ -45,7 +46,17 @@
                if(evt.key === 'ArrowRight') {
                 console.log('right');
                 socket.emit('message',{data: 'move_right'});
-               }               
+               }       
+            
+               if(evt.key === 'ArrowUp') {
+                console.log('right');
+                socket.emit('message',{data: 'move_forward'});
+               }  
+
+               if(evt.key === 'ArrowDown') {
+                console.log('right');
+                socket.emit('message',{data: 'move_back'});
+               }   
                
            })
            
