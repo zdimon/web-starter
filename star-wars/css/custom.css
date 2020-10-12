@@ -1,0 +1,14 @@
+#out {
+    width: 200px;
+    height: 200px;
+    position: relative;
+    border: 1px solid red;
+}
+
+#in {
+    position: absolute;
+    border-radius: 50%;
+    background-color: red;
+    width: 30px;
+    height: 30px;
+}
