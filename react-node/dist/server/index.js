@@ -7,22 +7,27 @@ var app = require('express')();
 var reload = require('reload');
 var path = require('path');
 var server = require('http').createServer(app);
+app.use(express.static('.'));
+// livereload  
+var livereload = require("livereload");
+var liveReloadServer = livereload.createServer();
+liveReloadServer.watch(__dirname, '/../../src');
+liveReloadServer.server.once("connection", function () {
+    setTimeout(function () {
+        liveReloadServer.refresh("/");
+    }, 500);
+});
+var connectLivereload = require("connect-livereload");
+app.use(connectLivereload());
 // adding socket listener
 var io = require('socket.io')(server, {});
 var socketServer = new SocketServer_1.SocketServer(io);
-app.use(express.static('.'));
 // templates
 app.set('views', __dirname + '/../../src/server/tpl');
 app.engine('html', require('swig').renderFile);
 app.use("/", function (request, response) {
     response.render("index.html");
 });
-// livereload  
-var livereload = require("livereload");
-var liveReloadServer = livereload.createServer();
-liveReloadServer.watch(path.join(__dirname, 'dist'));
-var connectLivereload = require("connect-livereload");
-app.use(connectLivereload());
 server.listen(config_1.config.serverPort, function () {
     io.send({ message: 'Goooooo' });
     console.log("Listening " + config_1.config.serverPort);

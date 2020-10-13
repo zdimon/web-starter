@@ -6,7 +6,7 @@ var SocketServer = /** @class */ (function () {
         io.on('connection', function (socket) {
             console.log('Connected');
             console.log(socket.id);
-            io.send({ message: 'Goooooo' });
+            io.send({ message: '88888888' });
         });
     }
     return SocketServer;

@@ -1,1 +1,1 @@
-node ./node_modules/typescript/bin/tsc
+node ./node_modules/typescript/bin/tsc --watch

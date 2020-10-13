@@ -1,5 +1,6 @@
 {
     "verbose": false,
-    "ignore": ["dist/*"],
-    "watch": ["src/*"]
-  }
+    "ignore": ["node_modules"],
+    "watch": ["src/*"],
+    "ext": "*"
+}

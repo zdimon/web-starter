@@ -6,23 +6,31 @@ const app = require('express')();
 var reload = require('reload')
 var path = require('path');
 const server = require('http').createServer(app);
+app.use(express.static('.'));
+
+// livereload  
+const livereload = require("livereload");
+const liveReloadServer = livereload.createServer();
+liveReloadServer.watch(__dirname, '/../../src');   
+liveReloadServer.server.once("connection", () => {
+    setTimeout(() => {
+      liveReloadServer.refresh("/");
+    }, 500);
+  });    
+const connectLivereload = require("connect-livereload");
+app.use(connectLivereload());     
 
 // adding socket listener
 const io = require('socket.io')(server, {});
-var socketServer = new SocketServer(io);
-app.use(express.static('.'));
+var socketServer = new SocketServer(io);   
+
 // templates
 app.set('views', __dirname + '/../../src/server/tpl');
 app.engine('html', require('swig').renderFile);
 app.use("/", function(request, response){
-    response.render("index.html");
+    response.render("index.html");  
 });
-// livereload  
-const livereload = require("livereload");
-const liveReloadServer = livereload.createServer();
-liveReloadServer.watch(path.join(__dirname, 'dist'));
-const connectLivereload = require("connect-livereload");
-app.use(connectLivereload()); 
+
 
 
  
