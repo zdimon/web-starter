@@ -8,6 +8,7 @@ var path = require('path');
 const server = require('http').createServer(app);
 app.use(express.static('.'));
 
+
 // livereload  
 const livereload = require("livereload");
 const liveReloadServer = livereload.createServer();
@@ -38,5 +39,5 @@ app.use("/", function(request, response){
 
 server.listen(config.serverPort, () => {
     io.send({message: 'Goooooo'});
-    console.log(`Listening ${config.serverPort}`);
+    console.log(`Listening ${config.serverPort}!`);
 });
