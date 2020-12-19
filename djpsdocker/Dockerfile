@@ -7,5 +7,6 @@ RUN apt -y install libpq-dev
 COPY requirements.txt /app
 RUN /usr/local/bin/python -m pip install --upgrade pip
 RUN pip install -r requirements.txt
-COPY ./entrypoint.sh /app
-ENTRYPOINT ["/app/entrypoint.sh"]
+RUN mkdir /entry
+COPY entrypoint.sh /entry
+ENTRYPOINT ["/entry/entrypoint.sh"]

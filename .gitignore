@@ -1,2 +1,4 @@
 node_modules
 venv
+pg_data
+*.pyc
