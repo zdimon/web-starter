@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head><title>Socket io</title>
+        <script src="/libs/socket.io/client-dist/socket.io.min.js"></script>
+        <script src="/libs/jquery/dist/jquery.min.js"></script>
+    </head>
+    <body>
+        <h1>Test socketio!!!</h1>
+
+        <button id="button">Test</button>
+        <div id="time"></div>
+
+        <script>
+           const socket = io('ws://localhost:8050', {transports:['websocket']});  
+           
+           socket.on('connect', () => {
+                console.log('connected!');
+                socket.on('message', msg => {
+                    // console.log(msg);
+                    $('#time').html(msg.time);
+                })
+           });
+
+           $('#button').on('click',() => {
+               socket.emit('test_message',{data: 'ping'});
+           });
+
+        </script>
+        </body>
+</html>

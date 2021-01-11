@@ -1,0 +1,41 @@
+version: '3.5'
+services: 
+    socketio-server:
+        build: 
+            context: .
+            dockerfile: Dockerfile-socketio
+        volumes:
+            - .:/app
+        container_name: socket-io-server
+        ports:
+            - 8050:5000
+        depends_on:
+            - "socketio-redis"
+        command: ["python", "server.py"]
+
+    socketio-nginx:
+        build: 
+            context: .
+            dockerfile: Dockerfile-nginx
+        volumes:
+            - .:/app
+        ports:
+            - 8088:80
+        container_name: socket-io-nginx
+
+
+    socketio-redis:
+        image: "redis:alpine"
+        ports:
+            - "6999:6379"
+
+    socketio-pinger:
+        build: 
+            context: .
+            dockerfile: Dockerfile-socketio
+        volumes:
+            - .:/app
+        container_name: socket-io-pinger
+        depends_on:
+            - "socketio-redis"
+        command: ["python", "pinger.py"]
