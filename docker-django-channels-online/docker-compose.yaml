@@ -1,0 +1,28 @@
+version: '3.5'
+services: 
+    django:
+        build: .
+        restart: always
+        ports:
+            - 8000:8000
+        working_dir: /app
+        command: python manage.py runserver 0.0.0.0:8000
+        volumes:
+            - ./prj:/app
+        depends_on:
+            - db
+        env_file:
+            - ./.env.dev
+        container_name: django-server
+
+    db:
+        restart: always
+        image: postgres:latest
+        volumes:
+            - ./postgres_data:/var/lib/postgresql/data/
+        environment:
+            - POSTGRES_USER=postgres
+            - POSTGRES_PASSWORD=1q2w3e
+            - POSTGRES_DB=imaginary
+        container_name: postgres-server
+
