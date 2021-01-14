@@ -10,12 +10,14 @@ services:
         volumes:
             - ./prj:/app
         depends_on:
-            - db
+            - postgres-server
         env_file:
             - ./.env.dev
         container_name: django-server
+        networks: 
+            - ddco_network
 
-    db:
+    postgres-server:
         restart: always
         image: postgres:latest
         volumes:
@@ -25,4 +27,47 @@ services:
             - POSTGRES_PASSWORD=1q2w3e
             - POSTGRES_DB=imaginary
         container_name: postgres-server
+        networks: 
+            - ddco_network
 
+    redis-server:
+        image: "redis:alpine"
+        networks: 
+            - ddco_network
+        container_name: redis-server
+
+    celery-tasks:
+        build: .
+        restart: always
+        working_dir: /app
+        command: celery -A prj worker -l info
+        volumes:
+            - ./prj:/app
+        depends_on:
+            - redis-server
+            - postgres-server
+        env_file:
+            - ./.env.dev
+        container_name: celery-tasks
+        networks: 
+            - ddco_network
+
+    celery-beat:
+        build: .
+        restart: always
+        working_dir: /app
+        command: celery -A prj beat
+        volumes:
+            - ./prj:/app
+        depends_on:
+            - redis-server
+            - postgres-server
+        env_file:
+            - ./.env.dev
+        container_name: celery-beat
+        networks: 
+            - ddco_network
+
+networks:
+    ddco_network:
+        driver: bridge

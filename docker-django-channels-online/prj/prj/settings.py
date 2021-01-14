@@ -120,8 +120,10 @@ DATABASE = os.getenv('DATABASE', 'sqlite3')
 SQL_DATABASE = os.getenv('SQL_DATABASE', 'imaginary')
 SQL_USER = os.getenv('SQL_USER', 'postgres')
 SQL_PASSWORD = os.getenv('SQL_PASSWORD', '123')
-SQL_HOST = os.getenv('SQL_HOST', 'db')
+SQL_HOST = os.getenv('SQL_HOST', 'localhost')
 SQL_PORT = os.getenv('SQL_PORT', '5432')
+
+
 
 if DATABASE == 'sqlite3':
     DATABASES = {
@@ -142,3 +144,8 @@ elif DATABASE == 'postgres':
             'PORT': SQL_PORT,
         },
     }    
+
+REDIS_HOST = os.getenv('REDIS_HOST', 'localhost')
+REDIS_PORT = os.getenv('REDIS_PORT', '6379')
+
+CELERY_BROKER_URL = 'redis://' + REDIS_HOST + ':' + str(REDIS_PORT)
